@@ -1,29 +1,17 @@
 <?php
 
 // Класс
-class Characteristic
+trait Characteristic
 {
     // Переменные
-    protected $strength;
-    protected $armor;
-    protected $agility;
-    protected $intelligence;
-    protected $stamina;
-    protected $speed;
-    protected $luck;
+    protected $strength = 1;
+    protected $armor = 1;
+    protected $agility = 1;
+    protected $intelligence = 1;
+    protected $endurance = 1;
+    protected $speed = 1;
+    protected $luck = 1;
 
-    public function __construct($strength, $armor, $agility, $intelligence, $stamina, $speed, $luck)
-    {
-        $this->setStrength($strength);
-        $this->setAgility($agility);
-        $this->setArmor($armor);
-        $this->setIntelligence($intelligence);
-        $this->setStamina($stamina);
-        $this->setSpeed($speed);
-        $this->setLuck($luck);
-    }
-
-    // Функции
     public function getCharacteristics()
     {
         return [
@@ -31,7 +19,7 @@ class Characteristic
             'agility' => $this->agility,
             'armor' => $this->armor,
             'intelligence' => $this->intelligence,
-            'stamina' => $this->stamina,
+            'endurance' => $this->endurance,
             'speed' => $this->speed,
             'luck' => $this->luck
         ];
@@ -62,9 +50,9 @@ class Characteristic
         $this->intelligence = $value;
     }
 
-    public function setStamina(int $value)
+    public function setEndurance(int $value)
     {
-        $this->stamina = $value;
+        $this->endurance = $value;
     }
 
     public function setSpeed(int $value)
@@ -92,9 +80,9 @@ class Characteristic
         return $this->intelligence;
     }
 
-    public function getStamina()
+    public function getEndurance()
     {
-        return $this->stamina;
+        return $this->endurance;
     }
 
     public function getSpeed()
@@ -127,9 +115,9 @@ class Characteristic
         $this->intelligence += $value;
     }
 
-    public function addStamina(int $value)
+    public function addEndurance(int $value)
     {
-        $this->stamina += $value;
+        $this->endurance += $value;
     }
 
     public function addSpeed(int $value)

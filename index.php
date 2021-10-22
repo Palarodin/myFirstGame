@@ -1,21 +1,21 @@
 <?php
 
-// spl_autoload_register функция внутри php, мы с помощью ее вызываем все объявляемые классы внутри нашего приложения
 spl_autoload_register(function ($class_name) {
-    // include это внедряет код из указанных классов
-    // Точка обозначает соединение строк
-
     include $class_name . '.php';
 });
 
-// Инициализируем объект / класс Player и передаем значения аргументам
-// Записываем в локальную переменную $player
+$player = new Actor('Ikarus', 'Human', 'Warrior');
+$player->levelUp();
+$player->levelUp();
+$player->levelUp();
+$player->levelUp();
+$player->levelUp();
+$player->addExpirience(32000);
 
-$player = new Player('Ikarus', 'archer');
-$player->levelUp();
-$player->levelUp();
-$player->levelUp();
-$player->levelUp();
+echo '<pre>';
+var_dump($player);
+echo "</pre>"
+
 ?>
 
 <!doctype html>
@@ -28,39 +28,43 @@ $player->levelUp();
     <title>Document</title>
 </head>
 <body>
-    <h1>Игрок: <?php echo $player->getNickname() ?></h1>
-    <div style="display: grid; grid-template-columns: 300px 400px">
-        <div>
-            <?php echo "Здоровье " . $player->getHealth() ?><br>
-            <?php echo "Класс " . $player->getPlayerClass() ?><br>
-            <?php echo "Мана " . $player->getMana() ?><br>
-            <?php echo "Уровень " . $player->getLevel() ?><br>
-            <?php echo "Опыт " . $player->getExpirience() . "/" . $player->getMaxExpirience() ?><br>
+<h1>Игрок: <?php echo $player->getName() ?></h1>
+<div style="display: grid; grid-template-columns: 300px 400px">
+    <div>
+        <?php echo "Здоровье " . $player->getHealth() ?><br>
+        <?php echo "Класс " . $player->getClassName() ?><br>
+        <?php echo "Раса " . $player->getRaceName() ?><br>
+        <?php echo "Мана " . $player->getMana() ?><br>
+        <?php echo "Уровень " . $player->getLevel() ?><br>
 
-            <h3>Характеристики</h3>
-            <?php echo "Сила " . $player->characteristics->getStrength() ?><br>
-            <?php echo "Защита " . $player->characteristics->getArmor() ?><br>
-            <?php echo "Ловкость " . $player->characteristics->getAgility() ?><br>
-            <?php echo "Интеллект " . $player->characteristics->getIntelligence() ?><br>
-            <?php echo "Выносливость " . $player->characteristics->getStamina() ?><br>
-            <?php echo "Скорость " . $player->characteristics->getSpeed() ?><br>
-            <?php echo "Удача " . $player->characteristics->getLuck() ?><br>
-        </div>
-        <div>
-            <h2>Экипировка</h2>
-            <?php echo $player->equipment->getWeapon()->getName(); ?><br>
-            <hr>
-            <?php echo $player->equipment->getHelmet()->getName() ?><br>
-            <hr>
-            <?php echo $player->equipment->getArmor()->getName() ?><br>
-            <hr>
-            <?php echo $player->equipment->getPants()->getName() ?><br>
-            <hr>
-            <?php echo $player->equipment->getBoots()->getName() ?><br>
-            <hr>
-            <?php echo $player->equipment->getAccessory()->getName() ?><br>
-            <hr>
-        </div>
+        <?php echo "Опыт " . $player->getExpirience() ?><br>
+        <?php echo "Макс. опыт " . $player->getMaxExpirience() ?><br>
+
+
+        <h3>Характеристики</h3>
+        <?php echo "Сила " . $player->getCharacteristics()['strength'] ?><br>
+        <?php echo "Защита " . $player->getCharacteristics()['armor'] ?><br>
+        <?php echo "Ловкость " . $player->getCharacteristics()['agility'] ?><br>
+        <?php echo "Интеллект " . $player->getCharacteristics()['intelligence'] ?><br>
+        <?php echo "Выносливость " . $player->getCharacteristics()['endurance'] ?><br>
+        <?php echo "Скорость " . $player->getCharacteristics()['speed'] ?><br>
+        <?php echo "Удача " . $player->getCharacteristics()['luck'] ?><br>
     </div>
+    <div>
+        <h2>Экипировка</h2>
+<!--        --><?php //echo $player->equipment->getWeapon()->getName(); ?><!--<br>-->
+<!--        <hr>-->
+<!--        --><?php //echo $player->equipment->getHelmet()->getName() ?><!--<br>-->
+<!--        <hr>-->
+<!--        --><?php //echo $player->equipment->getArmor()->getName() ?><!--<br>-->
+<!--        <hr>-->
+<!--        --><?php //echo $player->equipment->getPants()->getName() ?><!--<br>-->
+<!--        <hr>-->
+<!--        --><?php //echo $player->equipment->getBoots()->getName() ?><!--<br>-->
+<!--        <hr>-->
+<!--        --><?php //echo $player->equipment->getAccessory()->getName() ?><!--<br>-->
+<!--        <hr>-->
+    </div>
+</div>
 </body>
 </html>
