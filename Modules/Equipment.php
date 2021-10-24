@@ -50,7 +50,7 @@ class Equipment
     }
 
     // В качестве аргумента $value функция ожидает объект Item
-    public function setWeapon(Item $value)
+    public function setWeapon(BaseItem $value)
     {
         // обращаемся к функции getType() класса Item
         // Потому что в аргументе $value мы передаем класс / объект Item
@@ -61,14 +61,14 @@ class Equipment
         }
     }
 
-    public function setHelmet(Item $value)
+    public function setHelmet(BaseItem $value)
     {
         if ($value->getType() === 'helmet') {
             $this->helmet = $value;
         }
     }
 
-    public function setArmor(Item $value)
+    public function setArmor(BaseItem $value)
     {
         if ($value->getType() === 'armor') {
             $this->armor = $value;
@@ -77,7 +77,7 @@ class Equipment
         $this->armor = $value;
     }
 
-    public function setPants(Item $value)
+    public function setPants(BaseItem $value)
     {
         if ($value->getType() === 'pants') {
             $this->pants = $value;
@@ -86,7 +86,7 @@ class Equipment
         $this->pants = $value;
     }
 
-    public function setBoots(Item $value)
+    public function setBoots(BaseItem $value)
     {
         if ($value->getType() === 'boots') {
             $this->boots = $value;
@@ -95,7 +95,7 @@ class Equipment
         $this->boots = $value;
     }
 
-    public function setAccessory(Item $value)
+    public function setAccessory(BaseItem $value)
     {
         if ($value->getType() === 'accessory') {
             $this->accessory = $value;
@@ -112,5 +112,9 @@ class Equipment
         }
 
         return null;
+    }
+
+    public function getCharacheristics() {
+
     }
 }

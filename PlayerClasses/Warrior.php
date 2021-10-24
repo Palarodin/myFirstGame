@@ -1,5 +1,5 @@
 <?php
-
+//Класс наследует содержимое класса PlayerClass
 class Warrior extends PlayerClass
 {
     public function __construct()

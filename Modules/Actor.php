@@ -69,6 +69,9 @@ class Actor {
         $this->equipment = new Equipment();
         $this->inventory = new Inventory();
 
+        $this->equipment->setWeapon(new Axe());
+        $this->equipment->setArmor(new BodyArmor());
+
         $this->regenerateHealth(10000);
         $this->regenerateStamina(10000);
         $this->regenerateMana(10000);

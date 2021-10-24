@@ -1,20 +1,13 @@
 <?php
 
-spl_autoload_register(function ($class_name) {
-    include $class_name . '.php';
-});
+require './bootstrap.php';
 
-$player = new Actor('Ikarus', 'Human', 'Warrior');
-$player->levelUp();
-$player->levelUp();
-$player->levelUp();
-$player->levelUp();
-$player->levelUp();
-$player->addExpirience(32000);
+$player = new Actor('Ikarus', 'Orc', 'Berserk');
+
 
 echo '<pre>';
 var_dump($player);
-echo "</pre>"
+echo "</pre>";
 
 ?>
 
@@ -52,18 +45,18 @@ echo "</pre>"
     </div>
     <div>
         <h2>Экипировка</h2>
-<!--        --><?php //echo $player->equipment->getWeapon()->getName(); ?><!--<br>-->
-<!--        <hr>-->
-<!--        --><?php //echo $player->equipment->getHelmet()->getName() ?><!--<br>-->
-<!--        <hr>-->
-<!--        --><?php //echo $player->equipment->getArmor()->getName() ?><!--<br>-->
-<!--        <hr>-->
-<!--        --><?php //echo $player->equipment->getPants()->getName() ?><!--<br>-->
-<!--        <hr>-->
-<!--        --><?php //echo $player->equipment->getBoots()->getName() ?><!--<br>-->
-<!--        <hr>-->
-<!--        --><?php //echo $player->equipment->getAccessory()->getName() ?><!--<br>-->
-<!--        <hr>-->
+        <!--        --><?php //echo $player->equipment->getWeapon()->getName(); ?><!--<br>-->
+        <!--        <hr>-->
+        <!--        --><?php //echo $player->equipment->getHelmet()->getName() ?><!--<br>-->
+        <!--        <hr>-->
+        <!--        --><?php //echo $player->equipment->getArmor()->getName() ?><!--<br>-->
+        <!--        <hr>-->
+        <!--        --><?php //echo $player->equipment->getPants()->getName() ?><!--<br>-->
+        <!--        <hr>-->
+        <!--        --><?php //echo $player->equipment->getBoots()->getName() ?><!--<br>-->
+        <!--        <hr>-->
+        <!--        --><?php //echo $player->equipment->getAccessory()->getName() ?><!--<br>-->
+        <!--        <hr>-->
     </div>
 </div>
 </body>

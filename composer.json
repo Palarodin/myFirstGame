@@ -1,0 +1,17 @@
+{
+    "name": "hakuro/localhost",
+    "authors": [
+        {
+            "name": "Gor",
+            "email": "example@mail.ru"
+        }
+    ],
+
+    "require": {},
+
+    "autoload": {
+        "classmap": [
+            "Items", "Modules", "PlayerClasses", "Races", "Traits"
+        ]
+    }
+}

@@ -1,16 +1,16 @@
 <?php
 
-// Класс
+// Копируем содержимое класса
 trait Characteristic
 {
     // Переменные
-    protected $strength = 1;
-    protected $armor = 1;
-    protected $agility = 1;
-    protected $intelligence = 1;
-    protected $endurance = 1;
-    protected $speed = 1;
-    protected $luck = 1;
+    protected $strength = null;
+    protected $armor = null;
+    protected $agility = null;
+    protected $intelligence = null;
+    protected $endurance = null;
+    protected $speed = null;
+    protected $luck = null;
 
     public function getCharacteristics()
     {

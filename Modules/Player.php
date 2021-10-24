@@ -74,7 +74,7 @@ class Player
         $this->equipment->setAccessory($accessory);
     }
 
-
+// Вызываем функцию, в которой присваиваем занчение характеристик частям тела
     public function setCharacteristicsEquipment()
     {
         $this->characteristics->addCharacteristics(
