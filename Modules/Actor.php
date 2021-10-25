@@ -28,32 +28,40 @@ class Actor {
         $this->playerClass = new $class();
         $this->race = new $race();
 
+        $this->equipment = new Equipment();
+        $this->inventory = new Inventory();
+
+        $this->equipment->setHelmet(new BeginnerHelmet());
+        $this->equipment->setArmor(new BeginnerBodyArmor());
+
+        $equipCharacteristics = $this->equipment->getSumCharacheristics();
+
         $this->addStrength(
-            $this->playerClass->getStrength() + $this->race->getStrength()
+            $this->playerClass->getStrength() + $this->race->getStrength() + $equipCharacteristics['strength']
         );
 
         $this->addArmor(
-            $this->playerClass->getArmor() + $this->race->getArmor()
+            $this->playerClass->getArmor() + $this->race->getArmor() + $equipCharacteristics['armor']
         );
 
         $this->addAgility(
-            $this->playerClass->getAgility() + $this->race->getAgility()
+            $this->playerClass->getAgility() + $this->race->getAgility() + $equipCharacteristics['agility']
         );
 
         $this->addIntelligence(
-            $this->playerClass->getIntelligence() + $this->race->getIntelligence()
+            $this->playerClass->getIntelligence() + $this->race->getIntelligence() + $equipCharacteristics['intelligence']
         );
 
         $this->addEndurance(
-            $this->playerClass->getEndurance() + $this->race->getEndurance()
+            $this->playerClass->getEndurance() + $this->race->getEndurance() + $equipCharacteristics['endurance']
         );
 
         $this->addSpeed(
-            $this->playerClass->getSpeed() + $this->race->getSpeed()
+            $this->playerClass->getSpeed() + $this->race->getSpeed() + $equipCharacteristics['speed']
         );
 
         $this->addLuck(
-            $this->playerClass->getLuck() + $this->race->getLuck()
+            $this->playerClass->getLuck() + $this->race->getLuck() + $equipCharacteristics['luck']
         );
 
         $this->maxHealth = 500 + $this->playerClass->getMaxHealth();
@@ -66,11 +74,12 @@ class Actor {
         $this->isDead = false;
         $this->level = 1;
 
-        $this->equipment = new Equipment();
-        $this->inventory = new Inventory();
 
-        $this->equipment->setWeapon(new Axe());
-        $this->equipment->setArmor(new BodyArmor());
+
+//        $this->equipment->setWeapon(new BeginnerHelmet());
+//        $this->equipment->setArmor(new BodyArmor());
+
+
 
         $this->regenerateHealth(10000);
         $this->regenerateStamina(10000);

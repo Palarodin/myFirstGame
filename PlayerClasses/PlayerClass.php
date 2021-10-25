@@ -1,7 +1,5 @@
 <?php
 
-use Items\asda\Axe;
-
 class PlayerClass
 {
     //Вставляем содержимое класса в PlayerClass

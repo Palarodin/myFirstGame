@@ -11,7 +11,13 @@
 
     "autoload": {
         "classmap": [
-            "Items", "Modules", "PlayerClasses", "Races", "Traits"
+            "Items",
+            "Items/Helmets",
+            "Items/Body",
+            "Modules",
+            "PlayerClasses",
+            "Races",
+            "Traits"
         ]
     }
 }

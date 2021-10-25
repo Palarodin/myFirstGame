@@ -14,15 +14,36 @@ trait Characteristic
 
     public function getCharacteristics()
     {
-        return [
-            'strength' => $this->strength,
-            'agility' => $this->agility,
-            'armor' => $this->armor,
-            'intelligence' => $this->intelligence,
-            'endurance' => $this->endurance,
-            'speed' => $this->speed,
-            'luck' => $this->luck
-        ];
+        $array = [];
+
+        if ($this->strength !== null) {
+            $array['strength'] = $this->strength;
+        }
+
+        if ($this->armor !== null) {
+            $array['armor'] = $this->armor;
+        }
+
+        if ($this->agility !== null) {
+            $array['agility'] = $this->agility;
+        }
+
+        if ($this->intelligence !== null) {
+            $array['intelligence'] = $this->intelligence;
+        }
+        if ($this->endurance !== null) {
+            $array['endurance'] = $this->endurance;
+        }
+
+        if ($this->speed !== null) {
+            $array['speed'] = $this->speed;
+        }
+
+        if ($this->luck !== null) {
+            $array['luck'] = $this->luck;
+        }
+
+        return $array;
     }
 
     public function getStrength()
@@ -130,15 +151,16 @@ trait Characteristic
         $this->luck += $value;
     }
 
-    public function addCharacteristics(array $array) {
-       foreach ($array as $key => $value) {
-           $method = 'add' . ucfirst($key);
+    public function addCharacteristics(array $array)
+    {
+        foreach ($array as $key => $value) {
+            $method = 'add' . ucfirst($key);
 
-           if (method_exists($this, $method)) {
-               call_user_func_array([
-                   $this, $method
-               ], [$value]);
-           }
+            if (method_exists($this, $method)) {
+                call_user_func_array([
+                    $this, $method
+                ], [$value]);
+            }
         }
     }
 }

@@ -108,13 +108,39 @@ class Equipment
 
         if(method_exists($this, $method)) {
             $item = call_user_func_array([$this, $method], []);
+
+            if($item === null) {
+                return null;
+            }
+
             return $item->getCharacteristics();
         }
 
         return null;
     }
 
-    public function getCharacheristics() {
+    public function getSumCharacheristics() {
+        $array = [];
 
+        foreach ($this->bodyParts as $part) {
+            $item = $this->getItemCharacteristics($part);
+
+            if ($item === null) {
+                continue;
+            }
+
+            array_push($array, $item);
+        }
+
+        return [
+            'strength' => array_sum(array_column($array, 'strength')),
+            'armor' => array_sum(array_column($array, 'armor')),
+            'agility' => array_sum(array_column($array, 'agility')),
+            'intelligence' => array_sum(array_column($array, 'intelligence')),
+            'endurance' => array_sum(array_column($array, 'endurance')),
+            'speed' => array_sum(array_column($array, 'speed')),
+            'luck' => array_sum(array_column($array, 'luck')),
+        ];
     }
+
 }

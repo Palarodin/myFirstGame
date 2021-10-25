@@ -4,15 +4,15 @@ require './bootstrap.php';
 
 $player = new Actor('Ikarus', 'Orc', 'Berserk');
 
-
 echo '<pre>';
-var_dump($player);
+//var_dump($player);
 echo "</pre>";
 
 ?>
 
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -20,6 +20,7 @@ echo "</pre>";
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
 <h1>Игрок: <?php echo $player->getName() ?></h1>
 <div style="display: grid; grid-template-columns: 300px 400px">
@@ -32,7 +33,6 @@ echo "</pre>";
 
         <?php echo "Опыт " . $player->getExpirience() ?><br>
         <?php echo "Макс. опыт " . $player->getMaxExpirience() ?><br>
-
 
         <h3>Характеристики</h3>
         <?php echo "Сила " . $player->getCharacteristics()['strength'] ?><br>
