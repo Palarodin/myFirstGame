@@ -10,14 +10,8 @@
     "require": {},
 
     "autoload": {
-        "classmap": [
-            "Items",
-            "Items/Helmets",
-            "Items/Body",
-            "Modules",
-            "PlayerClasses",
-            "Races",
-            "Traits"
-        ]
+        "psr-4": {
+            "App\\": "App/"
+        }
     }
 }

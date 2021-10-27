@@ -1,11 +1,18 @@
 <?php
 
+use App\Modules\Actor;
+use App\Modules\Battle;
+
 require './bootstrap.php';
 
-$player = new Actor('Ikarus', 'Orc', 'Berserk');
+$player1 = new Actor('Ikarus', 'Orc', 'Berserk');
+$player2 = new Actor('Зомби', 'Orc', 'Berserk');
+
+
+$battle = new Battle($player1, $player2);
 
 echo '<pre>';
-//var_dump($player);
+//var_dump($battle);
 echo "</pre>";
 
 ?>
