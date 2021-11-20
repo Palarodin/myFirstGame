@@ -7,7 +7,10 @@
         }
     ],
 
-    "require": {},
+    "require": {
+        "symfony/routing": "^5.3",
+        "jenssegers/blade": "^1.4"
+    },
 
     "autoload": {
         "psr-4": {

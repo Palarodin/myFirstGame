@@ -1,70 +1,62 @@
 <?php
 
-use App\Modules\Actor;
-use App\Modules\Battle;
+use App\Controllers\Http\Web\DungeonController;
+use App\Controllers\Http\Web\MainController;
+use App\Controllers\Http\Web\ProfileController;
+use Jenssegers\Blade\Blade;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
 
 require './bootstrap.php';
 
-$player1 = new Actor('Ikarus', 'Orc', 'Berserk');
-$player2 = new Actor('Зомби', 'Orc', 'Berserk');
+$routes = new RouteCollection();
 
+$routes->add('index', new Route('/', [
+    'controller' => [MainController::class, 'get'],
+    'method' => ['GET', 'HEAD'],
+]));
 
-$battle = new Battle($player1, $player2);
+$routes->add('profile', new Route('/profile', [
+    'controller' => [ProfileController::class, 'get'],
+    'method' => ['GET', 'HEAD']
+]));
 
-echo '<pre>';
-//var_dump($battle);
-echo "</pre>";
+$routes->add('profile.inventory', new Route('/profile/inventory', [
+    'controller' => [ProfileController::class, 'inventory'],
+    'method' => ['GET', 'HEAD']
+]));
 
-?>
+$routes->add('dungeons', new Route ('/dungeons', [
+    'controller' => [DungeonController::class, 'dungeons']
+]));
 
-<!doctype html>
-<html lang="en">
+$routes->add('dungeons.level', new Route('/dungeons/{level}', [
+    'controller' => [DungeonController::class, 'level']
+]));
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
+$matcher = new UrlMatcher($routes, new RequestContext());
 
-<body>
-<h1>Игрок: <?php echo $player->getName() ?></h1>
-<div style="display: grid; grid-template-columns: 300px 400px">
-    <div>
-        <?php echo "Здоровье " . $player->getHealth() ?><br>
-        <?php echo "Класс " . $player->getClassName() ?><br>
-        <?php echo "Раса " . $player->getRaceName() ?><br>
-        <?php echo "Мана " . $player->getMana() ?><br>
-        <?php echo "Уровень " . $player->getLevel() ?><br>
+try {
+    $parameters = $matcher->match($_SERVER['REQUEST_URI']);
+    echo '<pre>';
+//    var_dump($parameters);
+    echo '</pre>';
 
-        <?php echo "Опыт " . $player->getExpirience() ?><br>
-        <?php echo "Макс. опыт " . $player->getMaxExpirience() ?><br>
+    if (method_exists($parameters['controller'][0], $parameters['controller'][1])) {
+        $controller = new $parameters['controller'][0];
 
-        <h3>Характеристики</h3>
-        <?php echo "Сила " . $player->getCharacteristics()['strength'] ?><br>
-        <?php echo "Защита " . $player->getCharacteristics()['armor'] ?><br>
-        <?php echo "Ловкость " . $player->getCharacteristics()['agility'] ?><br>
-        <?php echo "Интеллект " . $player->getCharacteristics()['intelligence'] ?><br>
-        <?php echo "Выносливость " . $player->getCharacteristics()['endurance'] ?><br>
-        <?php echo "Скорость " . $player->getCharacteristics()['speed'] ?><br>
-        <?php echo "Удача " . $player->getCharacteristics()['luck'] ?><br>
-    </div>
-    <div>
-        <h2>Экипировка</h2>
-        <!--        --><?php //echo $player->equipment->getWeapon()->getName(); ?><!--<br>-->
-        <!--        <hr>-->
-        <!--        --><?php //echo $player->equipment->getHelmet()->getName() ?><!--<br>-->
-        <!--        <hr>-->
-        <!--        --><?php //echo $player->equipment->getArmor()->getName() ?><!--<br>-->
-        <!--        <hr>-->
-        <!--        --><?php //echo $player->equipment->getPants()->getName() ?><!--<br>-->
-        <!--        <hr>-->
-        <!--        --><?php //echo $player->equipment->getBoots()->getName() ?><!--<br>-->
-        <!--        <hr>-->
-        <!--        --><?php //echo $player->equipment->getAccessory()->getName() ?><!--<br>-->
-        <!--        <hr>-->
-    </div>
-</div>
-</body>
-</html>
+        $request = $parameters;
+        unset($request['controller']);
+        unset($request['_route']);
+
+        call_user_func_array(array($controller, $parameters['controller'][1]), [
+            $request
+        ]);
+    } else {
+        throw new Exception('Method not exists');
+    }
+} catch (Exception $e) {
+    echo $e;
+}
