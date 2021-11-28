@@ -3,7 +3,8 @@
 use App\Controllers\Http\Web\DungeonController;
 use App\Controllers\Http\Web\MainController;
 use App\Controllers\Http\Web\ProfileController;
-use Jenssegers\Blade\Blade;
+use App\Controllers\Http\Web\TestController;
+
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
@@ -21,6 +22,10 @@ $routes->add('index', new Route('/', [
 $routes->add('profile', new Route('/profile', [
     'controller' => [ProfileController::class, 'get'],
     'method' => ['GET', 'HEAD']
+]));
+
+$routes->add('profile.id', new Route('/profile/{id}', [
+    'controller'=>[ProfileController::class, 'show']
 ]));
 
 $routes->add('profile.inventory', new Route('/profile/inventory', [

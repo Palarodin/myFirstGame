@@ -3,7 +3,6 @@
 namespace App\Modules;
 
 use App\Items\Helmets\BaseHelmet;
-use App\PlayerClasses\Berserk;
 use App\Races\Human;
 use App\Traits\Characteristic;
 

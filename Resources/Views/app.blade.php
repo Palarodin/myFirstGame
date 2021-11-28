@@ -49,6 +49,7 @@
         <a href="/profile">Профиль</a>
         <a href="/profile/inventory">Инвентарь</a>
         <a href="/dungeons">Данжи</a>
+        <a href="/test">test</a>
     </div>
 </nav>
 

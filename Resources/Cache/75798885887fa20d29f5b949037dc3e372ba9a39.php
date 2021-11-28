@@ -19,7 +19,7 @@
     </div>
 
     <h2>Журнал битвы</h2>
-    <?php echo $battle->log(); ?>
+    <?php echo $battle->getLog(); ?>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH Z:\Web\domains\localhost\Resources\Views/dungeon_level.blade.php ENDPATH**/ ?>

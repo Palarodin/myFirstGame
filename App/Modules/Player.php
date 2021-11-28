@@ -4,7 +4,6 @@ namespace App\Modules;
 
 use App\Items\Body\BeginnerBodyArmor;
 use App\Items\Helmets\BeginnerHelmet;
-use App\PlayerClasses\Berserk;
 use App\Races\Human;
 use App\Skills\BaseSkill;
 use App\Skills\Fireball;
@@ -12,10 +11,22 @@ use App\Skills\Fireball;
 class Player extends Actor {
     public $skills;
 
-    public function __construct($name, $race, $class) {
-        $this->name = $name;
+    protected $classId;
+    protected $raceId;
 
-        $this->playerClass = new Berserk();
+    public function __construct(array $data) {
+
+//        echo '<pre>';
+//        var_dump($data);
+//        echo '</pre>';
+
+        $this->name = $data['name'];
+
+        $this->class_id = $data['class_id'];
+
+        $this->playerClass = new PlayerClass();
+        $this->race_id = $data['race_id'];
+
         $this->race = new Human();
 
         $this->equipment = new Equipment();
@@ -65,15 +76,23 @@ class Player extends Actor {
         $this->maxMana = 500 + $this->playerClass->getMaxMana();
         $this->maxStamina = 500 + $this->playerClass->getMaxStamina();
 
-        $this->expirience = 0;
-        $this->maxExpirience = 1000;
+        $this->expirience = $data['expirience'];
+        $this->maxExpirience = $data['max_expirience'];
 
-        $this->isDead = false;
-        $this->level = 1;
+        $this->isDead = $data['isDead'];
+        $this->level = $data['level'];
 
         $this->regenerateHealth(10000);
         $this->regenerateStamina(10000);
         $this->regenerateMana(10000);
+    }
+
+    public function getClassId() {
+        return $this->classId;
+    }
+
+    public function getRaceId() {
+        return $this->raceId;
     }
 
     public function useSkill() {

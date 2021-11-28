@@ -19,5 +19,5 @@
     </div>
 
     <h2>Журнал битвы</h2>
-    {!! $battle->log() !!}
+    {!! $battle->getLog() !!}
 @endsection

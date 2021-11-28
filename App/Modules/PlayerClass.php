@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PlayerClasses;
+namespace App\Modules;
 
 use App\Traits\Characteristic;
 

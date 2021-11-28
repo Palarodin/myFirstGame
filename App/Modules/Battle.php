@@ -4,39 +4,38 @@ namespace App\Modules;
 
 class Battle
 {
-    protected $player1;
-    protected $player2;
+    protected $player;
+    protected $enemy;
+
+    protected $isCritical = false;
+    protected $damage = 0;
+
+    protected $hasTurnPlayer;
+
     protected $log;
 
-    public function __construct(Actor $player1, Actor $player2)
+    public function __construct(Actor $player, Actor $enemy)
     {
-        $this->player1 = $player1;
-        $this->player2 = $player2;
+        $this->player = $player;
+        $this->enemy = $enemy;
 
-        $this->start();
+        $result = $this->checkInitiative();
+        $this->hasTurnPlayer = $result[0] > $result[1];
+
+        $this->turn();
     }
 
-    //Функция броска кубика с аргументами мин и макс числа
-    public function rollDice(int $min, int $max)
+    public function rollDice(int $min, int $max): int
     {
         return random_int($min, $max);
     }
 
-    public function start()
-    {
-        $result = $this->checkInitiative();
+    /**
+     * Возвращает массив с результатами кубиков, кто первый ходит
+     * @return int[]
+     */
 
-        // TODO: Переделать хранение порядка игрока, в общей переменной класса
-
-        if ($result[0] > $result[1]) {
-            $this->turn($this->player1, $this->player2);
-        } else {
-            $this->turn($this->player2, $this->player1);
-        }
-    }
-
-    //Функция проверки первого хода
-    public function checkInitiative()
+    public function checkInitiative(): array
     {
         $result = [
             $this->rollDice(1, 20),
@@ -50,66 +49,114 @@ class Battle
         return $result;
     }
 
-    public function criticalDamage(Actor $player1, Actor $player2)
-    {
-        $player1Damage = $player1->getStrength() * $this->rollDice(1, 8) * 4;
-        $player2->damage($player1Damage);
+    /**
+     * Возвращает критический урон
+     * @param string $var - передаем с какой переменной берем силу
+     * @return int
+     */
 
-        $this->log .= $player1->getName() . ' наносит критический урон ' . $player1Damage . ' игроку ' . $player2->getName() . "<br>";
+    public function criticalDamage(string $var): int
+    {
+        $this->isCritical = true;
+        return $this->{$var}->getStrength() * $this->rollDice(1, 8) * 4;
     }
 
-    public function damage(Actor $player1, Actor $player2)
+    /**
+     * Возращает обычный урон
+     * @param string $var - передаем с какой переменной берем силу
+     * @return int
+     */
+    public function damage(string $var): int
     {
-        $player1Damage = $player1->getStrength() * $this->rollDice(1, 8);
-        $player2->damage($player1Damage);
-
-        $this->log .= $player1->getName() . ' наносит урон ' . $player1Damage . ' игроку ' . $player2->getName() . "<br>";
+        $this->isCritical = false;
+        return $this->{$var}->getStrength() * $this->rollDice(1, 8);
     }
 
-    public function miss(Actor $player1, Actor $player2)
-    {
-        $player2->damage(0);
-        $this->log .= $player1->getName() . ' промахнулся ' . "<br>";
-    }
+    /**
+     * Считает сколько дамага нанесет один участник другому
+     * И записывает в лог
+     * @param string $type
+     */
 
-    public function calculateDamage(Actor $player1, Actor $player2)
+    public function calculateDamage(string $type)
     {
         $result = $this->rollDice(1, 20);
 
+        $this->damage = 0;
+
         if ($result >= 17) {
-            $this->criticalDamage($player1, $player2);
+            $this->damage = $this->criticalDamage($type);
         } elseif ($result >= 5) {
-            $this->damage($player1, $player2);
+            $this->damage = $this->damage($type);
+        }
+
+        if ($type === 'player') {
+            $this->enemy->damage($this->damage);
+            $this->writeLog($type, 'enemy');
         } else {
-            $this->miss($player1, $player2);
+            $this->player->damage($this->damage);
+            $this->writeLog($type, 'player');
         }
-
-
-        // TODO: Выяснит ьпочему в функции помимо булев значения возвращает еще NULL
-
     }
 
-    public function turn(Actor $player1, Actor $player2)
+    /**
+     * В зависимости от проверки совершается ход
+     */
+
+    public function turn()
     {
-        $this->calculateDamage($player1, $player2);
-        $this->calculateDamage($player2, $player1);
-
-        var_dump($player1->isDead());
-        var_dump($player2->isDead());
-
-        if ($player1->isDead() === true || $player2->isDead() === true) {
-            $this->log .= $player2->getName() . " погиб на поле брани";
+        if ($this->hasTurnPlayer === true) {
+            $this->calculateDamage('player');
+            $this->calculateDamage('enemy');
+        } else {
+            $this->calculateDamage('enemy');
+            $this->calculateDamage('player');
         }
 
-//        var_dump($player1->isDead());
-//        var_dump($player2->isDead()); // Вместо TRUE выпадает NULL
-
-//        if($player1->isDead() === false && $player2->isDead() === false) {
-//            $this->turn($this->player1, $this->player2);
-//        }
+        $this->checkDead();
     }
 
-    public function log()
+    /**
+     * Проверяем смерть одного из участников, если кто-то умер, останавливаем бой
+     * @return bool|void
+     */
+    public function checkDead() {
+        if($this->player->getHealth() <= 0) {
+            $this->log .= $this->player->getName() . ' погиб на поле боя';
+            return true;
+        }
+
+        if($this->enemy->getHealth() <= 0) {
+            $this->log .= $this->enemy->getName() . ' погиб, но обещал вернуться';
+            return true;
+        }
+
+        $this->turn();
+    }
+
+    /**
+     * Записываем в лог тип дамага и кто кому сколько нанес
+     * @param string $given
+     * @param string $taken
+     */
+
+    public function writeLog(string $given, string $taken): void
+    {
+        if ($this->isCritical === true) {
+            $this->log .= $this->{$given}->getName() . ' наносит критический урон ' . $this->damage . ' игроку ' . $this->{$taken}->getName() . "<br>";
+        } elseif ($this->isCritical === false && $this->damage > 0) {
+            $this->log .= $this->{$given}->getName() . ' наносит урон ' . $this->damage . ' игроку ' . $this->{$taken}->getName() . "<br>";
+        } else {
+            $this->log .= $this->{$given}->getName() . ' промахнулся' . "<br>";
+        }
+    }
+
+    /**
+     * Получаем лог
+     * @return string
+     */
+
+    public function getLog(): string
     {
         return $this->log;
     }
