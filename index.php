@@ -3,14 +3,15 @@
 use App\Controllers\Http\Web\DungeonController;
 use App\Controllers\Http\Web\MainController;
 use App\Controllers\Http\Web\ProfileController;
-use App\Controllers\Http\Web\TestController;
-
+use PhpOrm\DB;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
 require './bootstrap.php';
+
+DB::config('Config/Database.php');
 
 $routes = new RouteCollection();
 
@@ -37,9 +38,12 @@ $routes->add('dungeons', new Route ('/dungeons', [
     'controller' => [DungeonController::class, 'dungeons']
 ]));
 
+// TODO: Переименовать функцию Level в getInformation
 $routes->add('dungeons.level', new Route('/dungeons/{level}', [
     'controller' => [DungeonController::class, 'level']
 ]));
+
+// TODO: Создать новый роут, со следующем путем /dungeons/{level}/battle
 
 $matcher = new UrlMatcher($routes, new RequestContext());
 

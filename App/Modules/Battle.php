@@ -122,12 +122,14 @@ class Battle
      */
     public function checkDead() {
         if($this->player->getHealth() <= 0) {
+            $this->player->kill();
             $this->log .= $this->player->getName() . ' погиб на поле боя';
             return true;
         }
 
         if($this->enemy->getHealth() <= 0) {
-            $this->log .= $this->enemy->getName() . ' погиб, но обещал вернуться';
+            $this->player->addExpirience($this->enemy->getExpirience());
+            $this->log .= 'Вы победили ' . $this->enemy->getName() . ' и получили ' . $this->enemy->getExpirience() . ' опыта';
             return true;
         }
 

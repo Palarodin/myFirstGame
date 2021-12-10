@@ -2,14 +2,7 @@
 
 namespace App\Modules;
 
-use App\Items\Helmets\BaseHelmet;
-use App\Races\Human;
 use App\Traits\Characteristic;
-
-use App\Items\Helmets\BeginnerHelmet;
-use App\Items\Body\BeginnerBodyArmor;
-
-//use App\PlayerClasses\Berserk;
 
 class Actor
 {
@@ -27,12 +20,6 @@ class Actor
     protected $maxMana;
     protected $maxHealth;
     protected $maxStamina;
-    protected $maxExpirience;
-
-    protected $equipment;
-    protected $inventory;
-    protected $playerClass;
-    protected $race;
 
     public function regenerateHealth(int $health)
     {
@@ -71,14 +58,15 @@ class Actor
     {
         $this->level++;
 
-        $this->expirience = 0;
         $this->maxHealth += 500;
         $this->maxMana += 500;
+        $this->maxStamina += 500;
 
         $this->maxExpirience *= 2;
 
         $this->regenerateHealth($this->maxHealth);
         $this->regenerateMana($this->maxMana);
+        $this->regenerateStamina($this->maxStamina);
 
         $this->addStrength(2);
         $this->addAgility(2);
@@ -92,11 +80,8 @@ class Actor
     public function kill()
     {
         $this->health = 0;
-        $this->isDead = true;
-        $this->expirience = 0;
-        $this->maxExpirience = 0;
-        $this->level = 1;
         $this->mana = 0;
+        $this->isDead = true;
     }
 
     public function damage(int $damage)
@@ -178,8 +163,14 @@ class Actor
         $this->expirience = $this->expirience + $expirience;
 
         if ($this->expirience >= $this->maxExpirience) {
+            $this->expirience = 0;
             $this->levelUp();
         }
+    }
+
+    public function setExpirience(int $value)
+    {
+        $this->expirience = $value;
     }
 
     public function spendMana(int $spend)
@@ -204,6 +195,21 @@ class Actor
     public function setMaxStamina(int $value)
     {
         $this->maxStamina = $value;
+    }
+
+    public function setHealth(int $value)
+    {
+        $this->health = $value;
+    }
+
+    public function setMana(int $value)
+    {
+        $this->mana = $value;
+    }
+
+    public function setStamina(int $value)
+    {
+        $this->stamina = $value;
     }
 
     public function setName(string $name)

@@ -4,30 +4,32 @@ namespace App\Modules;
 
 use App\Items\Body\BeginnerBodyArmor;
 use App\Items\Helmets\BeginnerHelmet;
-use App\Races\Human;
 use App\Skills\BaseSkill;
-use App\Skills\Fireball;
+use PhpOrm\DB;
 
-class Player extends Actor {
+class Player extends Actor
+{
+    protected $id;
+    protected $db;
+
     public $skills;
 
-    protected $classId;
-    protected $raceId;
+    protected $maxExpirience;
 
-    public function __construct(array $data) {
+    protected $equipment;
+    protected $inventory;
+    protected $playerClass;
+    protected $race;
 
-//        echo '<pre>';
-//        var_dump($data);
-//        echo '</pre>';
+    public function __construct(array $data)
+    {
+        $this->db = new DB();
 
+        $this->id = $data['id'];
         $this->name = $data['name'];
 
-        $this->class_id = $data['class_id'];
-
-        $this->playerClass = new PlayerClass();
-        $this->race_id = $data['race_id'];
-
-        $this->race = new Human();
+        $this->playerClass = new PlayerClass($data['class_id']);
+        $this->race = new PlayerRace($data['race_id']);
 
         $this->equipment = new Equipment();
         $this->inventory = new Inventory();
@@ -72,9 +74,9 @@ class Player extends Actor {
             $this->playerClass->getLuck() + $this->race->getLuck() + $equipCharacteristics['luck']
         );
 
-        $this->maxHealth = 500 + $this->playerClass->getMaxHealth() + $equipCharacteristics['maxHealth'];
-        $this->maxMana = 500 + $this->playerClass->getMaxMana();
-        $this->maxStamina = 500 + $this->playerClass->getMaxStamina();
+        $this->maxHealth = (500 * $data['level']) + $this->playerClass->getMaxHealth() + $this->race->getMaxHealth() + $equipCharacteristics['maxHealth'];
+        $this->maxMana = (500 * $data['level']) + $this->playerClass->getMaxMana() + $this->race->getMaxMana();
+        $this->maxStamina = (500 * $data['level']) + $this->playerClass->getMaxStamina() + $this->race->getMaxStamina();
 
         $this->expirience = $data['expirience'];
         $this->maxExpirience = $data['max_expirience'];
@@ -87,16 +89,63 @@ class Player extends Actor {
         $this->regenerateMana(10000);
     }
 
-    public function getClassId() {
-        return $this->classId;
+    public function regenerateHealth(int $health)
+    {
+        parent::regenerateHealth($health);
+
+        $this->db->table('users')->where('id', $this->id)->update(['health' => $this->health]);
     }
 
-    public function getRaceId() {
-        return $this->raceId;
+    public function regenerateMana(int $mana)
+    {
+        parent::regenerateMana($mana);
+
+        $this->db->table('users')->where('id', $this->id)->update(['mana' => $this->mana]);
     }
 
-    public function useSkill() {
-        if($this->skills->getManaCost() > $this->getMana()) {
+    public function regenerateStamina(int $stamina)
+    {
+        parent::regenerateStamina($stamina);
+        $this->db->table('users')->where('id', $this->id)->update(['stamina' => $this->stamina]);
+    }
+
+    public function addExpirience($expirience)
+    {
+        parent::addExpirience($expirience);
+
+        $this->db->table('users')->where('id', $this->id)->update(['expirience' => (string)$this->expirience]);
+    }
+
+    public function levelUp()
+    {
+        parent::levelUp();
+
+        $user = $this->db
+            ->table('users')
+            ->where('id', $this->id);
+
+        $this->db->begin();
+
+        $user->update(['level' => $this->level]);
+        $user->update(['max_expirience' => $this->maxExpirience]);
+
+        $this->db->commit();
+    }
+
+    public function kill()
+    {
+        parent::kill();
+
+        $this->expirience = 0;
+        $this->maxExpirience = 0;
+        $this->level = 1;
+
+        $this->db->table('users')->where('id', $this->id)->update(['isDead' => 1]);
+    }
+
+    public function useSkill()
+    {
+        if ($this->skills->getManaCost() > $this->getMana()) {
             echo "Не хватает маны";
             return null;
         }

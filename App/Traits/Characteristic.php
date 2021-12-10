@@ -12,7 +12,10 @@ trait Characteristic
     protected $endurance = null;
     protected $speed = null;
     protected $luck = null;
+
     protected $maxHealth = null;
+    protected $maxMana = null;
+    protected $maxStamina = null;
 
     public function getCharacteristics()
     {
@@ -165,6 +168,27 @@ trait Characteristic
     public function setMaxHealth(int $value)
     {
         $this->maxHealth = $value;
+    }
+
+    public function getMaxMana()
+    {
+        return $this->maxMana;
+
+    }
+
+    public function getMaxStamina()
+    {
+        return $this->maxStamina;
+    }
+
+    public function setMaxMana(int $value)
+    {
+        $this->maxMana = $value;
+    }
+
+    public function setMaxStamina(int $value)
+    {
+        $this->maxStamina = $value;
     }
 
     public function addMaxHealth(int $value)

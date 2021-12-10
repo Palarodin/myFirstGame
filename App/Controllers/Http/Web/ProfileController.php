@@ -3,6 +3,7 @@
 namespace App\Controllers\Http\Web;
 
 use App\Controllers\Http\Controller;
+use App\Models\User;
 use App\Modules\Database;
 use App\Modules\Player;
 use App\Modules\PlayerClass;
@@ -25,15 +26,11 @@ class ProfileController extends Controller {
     }
 
     public function show($request) {
-        $database = new Database();
 
-        $player = new Player($database->find('users', $request['id']));
-        $class = $database->find('classes', $player->getClassId());
-        var_dump($class);
-//        $class = new PlayerClass();
+        $user = new Player(User::factory()->find(1));
 
         echo $this->views->make('profile.characteristics', [
-            'player' => $player
+            'player' => $user
         ])->render();
 
     }

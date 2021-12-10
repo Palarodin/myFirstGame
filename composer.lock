@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "877f4f3935f67dc039c64c6fd50a2a41",
+    "content-hash": "376be3e00b3ffb45445b9412c4b0fac2",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -893,6 +893,66 @@
             "time": "2017-10-23T01:57:42+00:00"
         },
         {
+            "name": "riverside/php-orm",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/riverside/php-orm.git",
+                "reference": "fb33c54faef3712f59107bda4513123e412fc0ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/riverside/php-orm/zipball/fb33c54faef3712f59107bda4513123e412fc0ca",
+                "reference": "fb33c54faef3712f59107bda4513123e412fc0ca",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": "*",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpOrm\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dimitar Ivanov",
+                    "email": "info@zinoui.com",
+                    "homepage": "https://zinoui.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP ORM micro-library and query builder",
+            "homepage": "https://github.com/riverside/php-orm",
+            "keywords": [
+                "database",
+                "mysql",
+                "orm",
+                "pdo",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/riverside/php-orm/issues",
+                "source": "https://github.com/riverside/php-orm/tree/v1.0.6"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/Dimitar81",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-11-28T18:27:30+00:00"
+        },
+        {
             "name": "symfony/deprecation-contracts",
             "version": "v2.4.0",
             "source": {
@@ -1448,6 +1508,87 @@
             "time": "2021-03-23T23:28:01+00:00"
         },
         {
+            "name": "symfony/var-dumper",
+            "version": "v3.4.47",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/var-dumper.git",
+                "reference": "0719f6cf4633a38b2c1585140998579ce23b4b7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/0719f6cf4633a38b2c1585140998579ce23b4b7d",
+                "reference": "0719f6cf4633a38b2c1585140998579ce23b4b7d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
+            },
+            "require-dev": {
+                "ext-iconv": "*",
+                "twig/twig": "~1.34|~2.4"
+            },
+            "suggest": {
+                "ext-iconv": "To convert non-UTF-8 strings to UTF-8 (or symfony/polyfill-iconv in case ext-iconv cannot be used).",
+                "ext-intl": "To show region name in time zone dump",
+                "ext-symfony_debug": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Resources/functions/dump.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Component\\VarDumper\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony mechanism for exploring and dumping PHP variables",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "debug",
+                "dump"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/var-dumper/tree/v3.4.47"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-10-24T10:57:07+00:00"
+        },
+        {
             "name": "voku/portable-ascii",
             "version": "1.5.6",
             "source": {
@@ -1520,6 +1661,49 @@
                 }
             ],
             "time": "2020-11-12T00:07:28+00:00"
+        },
+        {
+            "name": "wanfeiyy/dd",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wanfeiyy/laravel-dd.git",
+                "reference": "7a2d3f58e2320e3dd7b1f366f6931163c47ba772"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wanfeiyy/laravel-dd/zipball/7a2d3f58e2320e3dd7b1f366f6931163c47ba772",
+                "reference": "7a2d3f58e2320e3dd7b1f366f6931163c47ba772",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/var-dumper": "^3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Dd/helpers.php"
+                ],
+                "psr-4": {
+                    "Dd\\": "src/Dd"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "wanfeiyy",
+                    "email": "w454852895@163.com"
+                }
+            ],
+            "description": "use laravel dd replace var_dump",
+            "support": {
+                "issues": "https://github.com/wanfeiyy/laravel-dd/issues",
+                "source": "https://github.com/wanfeiyy/laravel-dd/tree/v1.0.3"
+            },
+            "time": "2016-12-30T02:32:44+00:00"
         }
     ],
     "packages-dev": [],
@@ -1528,7 +1712,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-pdo": "*"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
 }
